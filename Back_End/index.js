@@ -124,6 +124,20 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
+app.get('/users', authenticateToken, (req, res) => {
+
+    db.query(
+        'SELECT id, firstname, lastname FROM users WHERE id != ?',
+        [req.user.id],
+        (err, results) => {
+
+            if (err) return res.status(500).send('Erreur users');
+
+            res.json(results);
+        }
+    );
+});
+
 
 app.post('/forgot-password', (req, res) => {
     console.log("🔥 HIT FORGOT PASSWORD")
@@ -255,12 +269,29 @@ app.post('/posts', authenticateToken, upload.single('media'), (req, res) => {
 });
 
 app.get('/posts', authenticateToken, (req, res) => {
-    db.query('SELECT posts.id, posts.content, users.photo, users.firstname, users.lastname, posts.media_url, posts.media_type, posts.create_at FROM posts JOIN users ON posts.user_id = users.id', (err, results) => {
+
+    const userId = req.user.id;
+
+    const sql = `
+        SELECT posts.id, posts.content, posts.media_url, posts.media_type,
+               posts.create_at,
+               users.firstname, users.lastname, users.photo
+        FROM posts
+        JOIN users ON posts.user_id = users.id
+        WHERE posts.user_id = ?
+        OR posts.user_id IN (
+            SELECT following_id FROM follows WHERE follower_id = ?
+        )
+        ORDER BY posts.create_at DESC
+    `;
+
+    db.query(sql, [userId, userId], (err, results) => {
+
         if (err) {
-            console.error('Error fetching posts:', err);
-            res.status(500).send('Error fetching posts');
-            return;
+            console.error(err);
+            return res.status(500).send("Error fetching posts");
         }
+
         res.json(results);
     });
 });
