@@ -1,0 +1,124 @@
+.home-layout> :first-child {
+  position: sticky;
+  top: 80px;
+}
+
+.side-bar {
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  width: 220px;
+}
+
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* LISTE */
+.side-bar ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ITEM */
+.side-bar li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 12px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* HOVER */
+.side-bar li:hover {
+  background: #F0EFFA;
+  width: 208px;
+}
+
+
+/* BARRE BLEUE */
+.side-bar li.active::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #4F46E5;
+  border-radius: 4px;
+}
+
+/* ICONES */
+.icon {
+  font-size: 18px;
+  color: #555;
+}
+
+/* TEXTE */
+.side-bar span {
+  font-size: 14px;
+  color: #333;
+}
+
+
+/* BOUTON */
+.create-post {
+  margin-top: 20px;
+  width: 93%;
+  padding: 12px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #6366F1, #4F46E5);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+.create-post:hover {
+  transform: translateY(-2px);
+}
+
+.side-bar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-block {
+  display: flex;
+  align-items: center;
+  width: 219px;
+  gap: 10px;
+  background: white;
+  padding: 15px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.profile-block img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-block p {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.profile-block span {
+  font-size: 12px;
+  color: #888;
+}
+
